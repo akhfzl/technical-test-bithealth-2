@@ -8,19 +8,19 @@ class RAGWorkflowBuilder:
     def retrieve_node(self, state):
         query = state["query"]
         vector = self.embedder.generate(query)
-
         points = self.qdrant.search_document(vector, top_k=5)
-    
+       
         docs = []
         for p in points:
             docs.append({
-                "id": p.id,
-                "content": p.payload.get("content", ""),
-                "metadata": p.payload.get("metadata", {}),
-                "score": p.score
+                "id": str(p.id), 
+                "content": str(p.payload.get("content", "")), 
+                "metadata": dict(p.payload.get("metadata", {})),  
+                "score": float(p.score) if p.score is not None else None  
             })
 
         state["retrieved_docs"] = docs
+        
         return state
 
     def answer_node(self, state):

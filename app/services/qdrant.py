@@ -26,6 +26,13 @@ class QdrantService:
                     distance=Distance.COSINE
                 )
             )
+    
+    def is_healthy(self):
+        try:
+            info = self.client.get_collection(self.collection)
+            return info is not None
+        except Exception:
+            return False
 
     def upsert_document(self, doc_id: str, vector, payload: dict):
         self.client.upsert(
@@ -34,12 +41,17 @@ class QdrantService:
         )
 
     def search_document(self, query_vector, top_k=5):
-        result = self.client.query_points(
-            collection_name=self.collection,
-            query=Query(vector=query_vector),
-            limit=top_k,
-        )
-        return result.points
+        try:
+            result = self.client.query_points(
+                collection_name=self.collection,
+                query=query_vector, 
+                limit=top_k,
+            )
+
+            return result.points
+        except Exception as e:
+            print(f"Error in search_document: {e}") 
+            raise
 
     def delete(self, doc_id: str):
         self.client.delete(
