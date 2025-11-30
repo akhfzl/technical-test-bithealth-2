@@ -17,9 +17,9 @@ class QdrantService:
 
     def _ensure_collection(self):
         try:
-            self.client.get_collection(self.collection)
+            return self.client.get_collection(self.collection)
         except Exception:
-            self.client.create_collection(
+            return self.client.create_collection(
                 collection_name=self.collection,
                 vectors_config=VectorParams(
                     size=self.dim,

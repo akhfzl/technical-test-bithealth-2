@@ -18,7 +18,9 @@ python3.11 -m venv myenv
 source myenv/bin/activate       # Linux / Mac
 myenv\Scripts\activate          # Windows
 
-pip install -r requirements.txt
+pip install -r requirements.txt #install dependency
+uvicorn app.main:app --reload #fastapi running
+pytest #unit test
 ```
 
 ---
@@ -177,5 +179,3 @@ Dengan mocking, semua test dapat dijalankan **tanpa koneksi internet** dan **tan
 
 Project ini memperlihatkan implementasi arsitektur Python modern yang scalable, testable, dan production-ready.
 Fokus utama mencakup modularitas, pemisahan service layer, integrasi ke Qdrant, workflow AI (LangGraph), dan testability.
-
-Silakan gunakan, modifikasi, dan kembangkan sesuai kebutuhan.

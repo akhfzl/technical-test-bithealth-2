@@ -5,16 +5,27 @@ class MockEmbedder:
     def generate(self, text: str):
         return [0.1, 0.2, 0.3]  
 
+class MockPoint:
+    def __init__(self, id, content, metadata, score):
+        self.id = id
+        self.payload = {
+            "content": content,
+            "metadata": metadata
+        }
+        self.score = score
+
+
 class MockQdrant:
     def search_document(self, vector, top_k=5):
         return [
-            {
-                "id": "123",
-                "content": "Mock document for testing",
-                "metadata": {},
-                "score": 0.88
-            }
+            MockPoint(
+                id="123",
+                content="Mock document for testing",
+                metadata={},
+                score=0.88
+            )
         ]
+
 
 
 def test_workflow_returns_docs():
@@ -31,12 +42,13 @@ def test_workflow_returns_docs():
     }
 
     final_state = workflow.invoke(initial_state)
+
     result = WorkflowResult(
-            initial_query=initial_state["query"],
-            retrieved_docs=final_state["retrieved_docs"],
-            final_answer=final_state["final_answer"],
-            processing_time='1.2'
+        initial_query=initial_state["query"],
+        retrieved_docs=final_state["retrieved_docs"],
+        final_answer=final_state["final_answer"],
+        processing_time=1.2
     )
     
-    assert len(result["retrieved_docs"]) == 1
-    assert result["final_answer"].startswith("Top doc:")
+    assert len(result.retrieved_docs) == 1
+    assert result.final_answer.startswith("Top doc:")

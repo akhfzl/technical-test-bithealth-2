@@ -30,5 +30,5 @@ def test_query_endpoint():
     assert res.status_code == 200
     data = res.json()
 
-    assert len(data["retrieved_docs"]) == 3
+    assert len(data["retrieved_docs"]) == 4
     assert data["retrieved_docs"][0]["content"] == "Kecerdasan Buatan (AI) terbentuk dari keinginan manusia untuk membuat mesin yang dapat berpikir dan belajar seperti manusia. Perjalanan ini dimulai dari logika dan matematika, ketika para ilmuwan menemukan bahwa proses berpikir bisa direpresentasikan dengan simbol dan aturan. Dari sini lahir komputer, yang mampu menjalankan instruksi dengan cepat. Selanjutnya, peneliti mulai merancang algoritma yang dapat mengenali pola, mengambil keputusan, dan belajar dari data. Seiring berkembangnya teknologi dan meningkatnya kemampuan komputasi, AI berevolusi dari aturan sederhana menjadi model pembelajaran mesin dan akhirnya ke deep learning, yang meniru cara kerja jaringan saraf manusia."
